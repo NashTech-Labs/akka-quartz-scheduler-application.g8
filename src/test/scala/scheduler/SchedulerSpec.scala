@@ -35,11 +35,11 @@ with WordSpecLike with MustMatchers with BeforeAndAfterAll{
     }
   }
     object TestActorRefFactory extends LocalActorRefFactory{
-      val testSystem: ActorSystem = _system
+      val system: ActorSystem = _system
       val actors: Map[String, ActorRef] = Map(
-        NAME_FIRST_ACTOR -> testSystem.actorOf(Props(ScheduleTestReceiver)
+        NAME_FIRST_ACTOR -> system.actorOf(Props(ScheduleTestReceiver)
           .withRouter(RoundRobinPool(NO_OF_INSTANCE.toInt))),
-        NAME_SECOND_ACTOR -> testSystem.actorOf(Props(ScheduleTestReceiver)
+        NAME_SECOND_ACTOR -> system.actorOf(Props(ScheduleTestReceiver)
           .withRouter(RoundRobinPool(NO_OF_INSTANCE.toInt)))
       )
     }
@@ -58,7 +58,7 @@ with WordSpecLike with MustMatchers with BeforeAndAfterAll{
       val receiver = _system.actorOf(Props(ScheduleTestReceiver))
       val probe = TestProbe()
       receiver ! NewProbe(probe.ref)
-      TestScheduler.schedule(_system)
+      TestScheduler.schedule
 
       val receipt = probe.receiveWhile(Duration(11, SECONDS), Duration(15, SECONDS), 20) {
         case Tock =>

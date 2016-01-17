@@ -1,6 +1,6 @@
 package com.knoldus.actors
 
-import akka.actor.{ActorSystem, ActorRef, ActorRefFactory, Props}
+import akka.actor.{ActorRef, ActorSystem, Props}
 import akka.routing.RoundRobinPool
 import com.knoldus.configuration.Configuration
 import com.typesafe.config.ConfigFactory
@@ -9,7 +9,7 @@ import com.typesafe.config.ConfigFactory
 trait LocalActorRefFactory {
 
   val actors: Map[String, ActorRef]
-
+  val system: ActorSystem
   def getReceiver(name: String): ActorRef = {
     actors.get(name) match {
       case None => throw new IllegalArgumentException("No Actor could be looked up for the specified name " + name)
@@ -19,11 +19,11 @@ trait LocalActorRefFactory {
 }
 
 object LocalActorRefFactory extends LocalActorRefFactory{
-  val _system: ActorSystem = ActorSystem.create("KnoldusScheduler", ConfigFactory.load)
+  val system: ActorSystem = ActorSystem.create("KnoldusScheduler", ConfigFactory.load)
   val actors: Map[String, ActorRef] = Map(
-    Configuration.NAME_FIRST_ACTOR -> _system.actorOf(Props(classOf[FirstActor])
+    Configuration.NAME_FIRST_ACTOR -> system.actorOf(Props(classOf[FirstActor])
       .withRouter(RoundRobinPool(Runtime.getRuntime.availableProcessors()))),
-    Configuration.NAME_SECOND_ACTOR -> _system.actorOf(Props(classOf[SecondActor])
+    Configuration.NAME_SECOND_ACTOR -> system.actorOf(Props(classOf[SecondActor])
       .withRouter(RoundRobinPool(Runtime.getRuntime.availableProcessors())))
   )
 
