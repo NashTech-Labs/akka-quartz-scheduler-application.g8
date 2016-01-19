@@ -8,9 +8,11 @@ class FirstActor extends Actor with ActorLogging{
   override def receive: Receive = {
     case Message1 => {
       log.info("<<<<First actor is up for message 1>>>>")
+      sender() ! Reply
     }
     case Message2 => {
       log.info("<<<<First actor is up for message 2>>>>")
+      sender() ! Reply
     }
   }
 

@@ -1,4 +1,5 @@
 import _root_.sbt.Keys._
+import scoverage.ScoverageKeys._
 
 name := "Akka-Quartz-Scheduler-Application"
 
@@ -9,6 +10,13 @@ version := "1.0"
 scalaVersion := "2.11.7"
 
 resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases"
+
+val scoverageSettings = Seq(
+  coverageExcludedPackages := "<empty>;controllers.javascript*;views.*;router;Reverse.*;assets.*;com.knoldus.actors.LocalActorRefFactory.*.*;com.knoldus.boot.*",
+  coverageExcludedFiles := "",
+  coverageMinimum := 80,
+  coverageFailOnMinimum := true
+)
 
 
 libraryDependencies ++= Seq(

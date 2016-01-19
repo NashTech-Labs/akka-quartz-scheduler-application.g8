@@ -60,7 +60,7 @@ with WordSpecLike with MustMatchers with BeforeAndAfterAll{
       receiver ! NewProbe(probe.ref)
       TestScheduler.schedule
 
-      val receipt = probe.receiveWhile(Duration(11, SECONDS), Duration(15, SECONDS), 20) {
+      val receipt = probe.receiveWhile(Duration(10, SECONDS), Duration(15, SECONDS), 20) {
         case Tock =>
           Tock
       }

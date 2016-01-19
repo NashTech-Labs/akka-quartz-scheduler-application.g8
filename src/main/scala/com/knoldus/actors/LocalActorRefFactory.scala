@@ -5,7 +5,7 @@ import akka.routing.RoundRobinPool
 import com.knoldus.configuration.Configuration
 import com.typesafe.config.ConfigFactory
 
-
+// $COVERAGE-OFF$Disabling highlighting by default until a workaround for https://issues.scala-lang.org/browse/SI-8596 is found
 trait LocalActorRefFactory {
 
   val actors: Map[String, ActorRef]
@@ -28,3 +28,4 @@ object LocalActorRefFactory extends LocalActorRefFactory{
   )
 
 }
+// $COVERAGE-ON$
