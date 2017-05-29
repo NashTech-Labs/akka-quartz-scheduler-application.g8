@@ -1,27 +1,12 @@
-import _root_.sbt.Keys._
-import scoverage.ScoverageKeys._
-
-name := "Akka-Quartz-Scheduler-Application"
-
-organization := "com.knoldus"
-
-version := "1.0"
-
-scalaVersion := "2.11.7"
-
-resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases"
-
-val scoverageSettings = Seq(
-  coverageExcludedPackages := "<empty>;controllers.javascript*;views.*;router;Reverse.*;assets.*;com.knoldus.actors.LocalActorRefFactory.*.*;com.knoldus.boot.*",
-  coverageExcludedFiles := "",
-  coverageMinimum := 80,
-  coverageFailOnMinimum := true
-)
-
-
-libraryDependencies ++= Seq(
-  "com.enragedginger"    %% "akka-quartz-scheduler"   % "1.4.0-akka-2.3.x",
-  "org.scalatest"       %% "scalatest"                % "2.2.4"            % "test",
-  "com.typesafe.akka"   %  "akka-testkit_2.11"        % "2.3.11",
-  "ch.qos.logback"      %  "logback-classic"          % "1.1.3"
-)
+// This build is for this Giter8 template.
+// To test the template run `g8` or `g8Test` from the sbt session.
+// See http://www.foundweekends.org/giter8/testing.html#Using+the+Giter8Plugin for more details.
+lazy val root = (project in file(".")).
+  settings(
+    name := "akka-quartz-scheduler-application",
+    test in Test := {
+      val _ = (g8Test in Test).toTask("").value
+    },
+    scriptedLaunchOpts ++= List("-Xms1024m", "-Xmx1024m", "-XX:ReservedCodeCacheSize=128m", "-XX:MaxPermSize=256m", "-Xss2m", "-Dfile.encoding=UTF-8"),
+    resolvers += Resolver.url("typesafe", url("http://repo.typesafe.com/typesafe/ivy-releases/"))(Resolver.ivyStylePatterns)
+  )
